@@ -50,12 +50,13 @@ def make_apple(cell, head):
     apple.setx(pos[0])
     apple.sety(pos[1])
     apple.showturtle()
+    print(f'apple is {fix_tuple(apple.pos())}')
     return apple
 
 def fix_tuple(tuple):
     fix = list(tuple)
-    fix[0] = int(fix[0])
-    fix[1] = int(fix[1])
+    fix[0] = round(int(fix[0]) / 10.0) * 10
+    fix[1] = round(int(fix[1]) / 10.0) * 10
     
     return fix
 
@@ -141,14 +142,21 @@ while True:
         head.sety(160)
         print(f'{headpos}, going up')
 
+    # make sure head does not go outside grid blocks
+    headpos = fix_tuple(head.pos())
+    head.setx(headpos[0])
+    head.sety(headpos[1])
+
+
     # checks if head is in body, ends game if it is
     for item in cell:
         cellpos = fix_tuple(item.pos())
-        print(cellpos, headpos)
+        # print(cellpos, headpos)
         if cellpos == headpos:
             print('DEATH')
             death = True
-    
+   
+    print(headpos)
     if death:
         break
 
